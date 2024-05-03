@@ -13,3 +13,18 @@ $(document).ready(function() {
         tagsPosition: 'top'
     });
 });
+
+const gallerySrc = [
+    "./assets/images/gallery/concerts/aaron-paul-concert.jpg",
+    "./assets/images/gallery/entreprise/ali-morshedlou.jpg"
+];
+
+const previousImg = document.querySelector('.mg-prev');
+const nextImg = document.querySelector('.mg-next');
+
+previousImg.addEventListener('click', () => {
+    const imgBox = document.querySelector('.lightboxImage')
+    console.log(imgBox)
+})
+
+
