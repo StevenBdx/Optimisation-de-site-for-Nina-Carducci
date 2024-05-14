@@ -357,3 +357,7 @@ input[type="submit"] {
 	}
 }
 
+.hide {
+	display: none;
+}
+
