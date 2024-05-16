@@ -39,75 +39,55 @@ let callback = function (mutationsList) {
       if (targetNode.classList.contains('modal-open')) {
         const iconeNext = document.querySelector('.mg-next')
         const iconePrev = document.querySelector('.mg-prev')
+        
         let imageSourceModal = document.querySelector('.lightboxImage.img-fluid').src
         let urlRelative = absoluVersRelatif(imageSourceModal);
 
         const actualIndice = galleryImages.indexOf(urlRelative)
 
-        if(actualIndice === 0)
+        if(actualIndice === 0) {
           document.querySelector('.mg-prev').classList.add('hide')
-        else if (actualIndice + 1 === galleryImages.length)
+          document.querySelector('.mg-next').classList.remove('hide')
+        } else if (actualIndice + 1 === galleryImages.length) {
           document.querySelector('.mg-next').classList.add('hide')
-        /*let galleryUrlLenght = galleryImages.lenght;
-
-        let currentIndex = 0;
-        for (let i = 1; i < galleryUrlLenght; i++) {
-          let indexTosearch = i - 1;
-          if (urlRelative === galleryUrlLenght.indexTosearch) {
-            currentIndex = indexTosearch;
-            // affichage des fleches
-            if (indexTosearch === 0) {
-              // je doit cacher ma fleche prev
-            } else if (indexTosearch === 8) {
-              // je doit cacher ma fleche next
-            } else {
-              // je doit faire appraitre mes deux fleches
-            }
-          }
-
-          // source
-          // j'ecoute le click prev
-          // je change la source en utilisant l'index prev
-          //new src = tableUrl.currentIndex - 1
-
-          // j'ecoute le click next
-          // je change la source en utilisant l'index next
-          //new src = tableUrl.currentIndex + 1
-        }*/
-
-
-
-
-
-
-
-        iconeNext.addEventListener('click', () => {
           document.querySelector('.mg-prev').classList.remove('hide')
-          let imageSourceModal = document.querySelector('.lightboxImage.img-fluid').src
-          let urlRelative = absoluVersRelatif(imageSourceModal);
-          const actualIndice = galleryImages.indexOf(urlRelative)
-          const nextImage = galleryImages[actualIndice + 1]
-          if (nextImage !== undefined) {
-            document.querySelector('.lightboxImage.img-fluid').src = nextImage
-            if (actualIndice + 2 === galleryImages.length)
-              document.querySelector('.mg-next').classList.add('hide')
-            
-          }
+        } else {
+          document.querySelector('.mg-next').classList.remove('hide')
+          document.querySelector('.mg-prev').classList.remove('hide')
+        }
 
+          
+        iconeNext.addEventListener('click', () => {
+          iconePrev.classList.remove('hide')
+          let imageSourceModal = document.querySelector('.lightboxImage.img-fluid').src
+          let urlRelativeNext = absoluVersRelatif(imageSourceModal);
+          const actualIndiceNext = galleryImages.indexOf(urlRelativeNext)
+          const nextImage = galleryImages[actualIndiceNext + 1]
+          document.querySelector('.lightboxImage.img-fluid').src = nextImage
+          if (actualIndiceNext + 1 === galleryImages.length - 1) {
+            iconeNext.classList.add('hide')
+          }
         })
+
         iconePrev.addEventListener('click', () => {
           document.querySelector('.mg-next').classList.remove('hide')
           let imageSourceModal = document.querySelector('.lightboxImage.img-fluid').src
-          let urlRelative = absoluVersRelatif(imageSourceModal);
-          const actualIndice = galleryImages.indexOf(urlRelative)
-          const nextImage = galleryImages[actualIndice - 1]
-          if (nextImage !== undefined) {
-            document.querySelector('.lightboxImage.img-fluid').src = nextImage
-            if (actualIndice - 1 === 0 )
-              document.querySelector('.mg-prev').classList.add('hide')
+          let urlRelativePrev = absoluVersRelatif(imageSourceModal);
+          const actualIndicePrev = galleryImages.indexOf(urlRelativePrev)
+          const prevImage = galleryImages[actualIndicePrev - 1]
+          document.querySelector('.lightboxImage.img-fluid').src = prevImage
+          console.log("before if iconeprev " + actualIndicePrev)
+          if (actualIndicePrev - 1 <= 0){
+            iconePrev.classList.add('hide')
+            
           }
-        })
 
+
+
+
+         
+        })
+        
       }
     }
   }
