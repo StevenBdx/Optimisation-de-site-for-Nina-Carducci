@@ -39,13 +39,13 @@ let callback = function (mutationsList) {
       if (targetNode.classList.contains('modal-open')) {
         const iconeNext = document.querySelector('.mg-next')
         const iconePrev = document.querySelector('.mg-prev')
-        
+
         let imageSourceModal = document.querySelector('.lightboxImage.img-fluid').src
         let urlRelative = absoluVersRelatif(imageSourceModal);
 
         const actualIndice = galleryImages.indexOf(urlRelative)
 
-        if(actualIndice === 0) {
+        if (actualIndice === 0) {
           document.querySelector('.mg-prev').classList.add('hide')
           document.querySelector('.mg-next').classList.remove('hide')
         } else if (actualIndice + 1 === galleryImages.length) {
@@ -56,42 +56,56 @@ let callback = function (mutationsList) {
           document.querySelector('.mg-prev').classList.remove('hide')
         }
 
-          
-        iconeNext.addEventListener('click', () => {
-          iconePrev.classList.remove('hide')
-          let imageSourceModal = document.querySelector('.lightboxImage.img-fluid').src
-          let urlRelativeNext = absoluVersRelatif(imageSourceModal);
-          const actualIndiceNext = galleryImages.indexOf(urlRelativeNext)
-          const nextImage = galleryImages[actualIndiceNext + 1]
-          document.querySelector('.lightboxImage.img-fluid').src = nextImage
-          if (actualIndiceNext + 1 === galleryImages.length - 1) {
-            iconeNext.classList.add('hide')
-          }
-        })
 
-        iconePrev.addEventListener('click', () => {
-          document.querySelector('.mg-next').classList.remove('hide')
-          let imageSourceModal = document.querySelector('.lightboxImage.img-fluid').src
-          let urlRelativePrev = absoluVersRelatif(imageSourceModal);
-          const actualIndicePrev = galleryImages.indexOf(urlRelativePrev)
-          const prevImage = galleryImages[actualIndicePrev - 1]
-          document.querySelector('.lightboxImage.img-fluid').src = prevImage
-          console.log("before if iconeprev " + actualIndicePrev)
-          if (actualIndicePrev - 1 <= 0){
-            iconePrev.classList.add('hide')
-            
-          }
-
-
-
-
-         
-        })
-        
+       
       }
     }
   }
 };
+
+/**
+ * A SAUVEGARDER
+ */
+document.addEventListener('click', function (event) {
+
+  if (event.target.classList.contains('mg-prev') || event.target.classList.contains('mg-next')) {
+    const iconePrev = document.querySelector('.mg-prev')
+    const iconeNext = document.querySelector('.mg-next')
+    let imageSourceModal = document.querySelector('.lightboxImage.img-fluid').src
+    let urlRelative = absoluVersRelatif(imageSourceModal);
+    const actualIndice = galleryImages.indexOf(urlRelative)
+    let image = '';
+
+    if (event.target.classList.contains('mg-next')) {
+      image = galleryImages[actualIndice + 1]
+
+      iconePrev.classList.remove('hide')
+      if (actualIndice + 1 === galleryImages.length - 1) {
+        iconeNext.classList.add('hide')
+      }
+    }
+
+    if (event.target.classList.contains('mg-prev')) {
+      image = galleryImages[actualIndice - 1]
+
+      iconeNext.classList.remove('hide')
+
+      if (actualIndice - 1 <= 0) {
+        iconePrev.classList.add('hide')
+      }
+    }
+
+    document.querySelector('.lightboxImage.img-fluid').src = image
+
+  }
+})
+/**
+ * FIN de A SAUVEGARDER
+ */
+
+
+
+
 
 // Créé une instance de l'observateur lié à la fonction de callback
 let observer = new MutationObserver(callback);
@@ -129,15 +143,3 @@ function absoluVersRelatif(urlAbsolue) {
   }
   return './' + cheminRelatif;
 }
-
-
-
-
-
-
-
-
-
-
-
-
